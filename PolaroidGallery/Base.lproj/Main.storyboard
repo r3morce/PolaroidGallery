@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PolaroidGallery" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +21,46 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSQ-Qt-EpB">
+                                <rect key="frame" x="-12" y="0.0" width="375" height="467"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E07-jD-gRc" userLabel="Container View">
+                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="467"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="1000" id="oyz-Lo-gNM"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="E07-jD-gRc" firstAttribute="height" secondItem="FSQ-Qt-EpB" secondAttribute="height" id="Anv-QH-CS7"/>
+                                    <constraint firstAttribute="trailing" secondItem="E07-jD-gRc" secondAttribute="trailing" id="MRN-JW-krg"/>
+                                    <constraint firstItem="E07-jD-gRc" firstAttribute="leading" secondItem="FSQ-Qt-EpB" secondAttribute="leading" id="daR-CX-jZS"/>
+                                    <constraint firstItem="E07-jD-gRc" firstAttribute="centerY" secondItem="FSQ-Qt-EpB" secondAttribute="centerY" id="tVz-BU-0ML"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="ymk-yT-vEB"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="FSQ-Qt-EpB" secondAttribute="trailing" id="Pkz-Eg-tQO"/>
+                            <constraint firstItem="FSQ-Qt-EpB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="TIW-06-fNb"/>
+                            <constraint firstItem="FSQ-Qt-EpB" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.7" id="eW4-P6-fSg"/>
+                            <constraint firstItem="FSQ-Qt-EpB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="otK-A2-O2w"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="containerView" destination="E07-jD-gRc" id="R4y-qu-ZbI"/>
+                        <outlet property="containerViewWidthConstraint" destination="oyz-Lo-gNM" id="bfP-KC-HVj"/>
+                        <outlet property="scrollView" destination="FSQ-Qt-EpB" id="Kdt-HQ-XIh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="24.800000000000001" y="35.532233883058474"/>
         </scene>
     </scenes>
 </document>
