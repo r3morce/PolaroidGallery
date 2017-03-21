@@ -43,6 +43,36 @@ class ViewController: UIViewController {
     fillWithPolaroids()
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    animatePolaroids()
+  }
+  
+  private func animatePolaroids() {
+
+    guard polaroidViews.count>1 else {
+      return
+    }
+    
+    let firstPolaroid = polaroidViews[0]
+    let secondPolaroid = polaroidViews[1]
+    
+    let firstPolaroidCenter = firstPolaroid.center
+    let secondPolaroidCenter = secondPolaroid.center
+    
+    firstPolaroid.center.x += firstPolaroid.frame.width
+    secondPolaroid.center.x += secondPolaroid.frame.width
+    
+    UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+      firstPolaroid.center = firstPolaroidCenter
+    }, completion: nil)
+    
+    UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveLinear, animations: {
+      secondPolaroid.center = secondPolaroidCenter
+    }, completion: nil)
+  }
+  
   private func fillWithPolaroids() {
     
     for _ in polaroids {
