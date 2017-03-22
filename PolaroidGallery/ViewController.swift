@@ -29,6 +29,12 @@ class ViewController: UIViewController {
   
   @IBOutlet weak var containerViewWidthConstraint: NSLayoutConstraint!
   
+  @IBOutlet private weak var addNewPolaroidButton: UIButton! {
+    didSet {
+      addNewPolaroidButton.setTitle("Hinzufügen", for: .normal)
+    }
+  }
+  
   // MARK: - Properties
   
   private var polaroids = ["a", "b", "c", "d", "e", "f", "g"]
@@ -49,7 +55,20 @@ class ViewController: UIViewController {
     animatePolaroids()
   }
   
-  private func animatePolaroids() {
+  @IBAction private func addNewPolaroid() {
+    
+    guard let polaroidView = createPolaroid() else {
+      return
+    }
+    
+    polaroidViews.append(polaroidView)
+    
+    polaroids.append("new")
+    
+    
+  }
+  
+  private func animatePolaroids(hasNewPolaroid: Bool = true) {
 
     guard polaroidViews.count>1 else {
       return
@@ -61,28 +80,47 @@ class ViewController: UIViewController {
     let firstPolaroidCenter = firstPolaroid.center
     let secondPolaroidCenter = secondPolaroid.center
     
-    firstPolaroid.center.x += firstPolaroid.frame.width
-    secondPolaroid.center.x += secondPolaroid.frame.width
+    if hasNewPolaroid {
+      
+      firstPolaroid.center.x -= firstPolaroid.frame.width
+      
+      UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+        firstPolaroid.center = firstPolaroidCenter
+      }, completion: nil)
+      
+    } else {
+      
+      secondPolaroid.center.x += secondPolaroid.frame.width
+      
+      UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+        firstPolaroid.center = firstPolaroidCenter
+      }, completion: nil)
+      
+      UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveLinear, animations: {
+        secondPolaroid.center = secondPolaroidCenter
+      }, completion: nil)
+    }
+  }
+  
+  private func createPolaroid() -> PolaroidView? {
     
-    UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
-      firstPolaroid.center = firstPolaroidCenter
-    }, completion: nil)
+    guard let polaroidView = Bundle.main.loadNibNamed("PolaroidView", owner: self, options: nil)?.first as? PolaroidView else {
+      return nil
+    }
     
-    UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveLinear, animations: {
-      secondPolaroid.center = secondPolaroidCenter
-    }, completion: nil)
+    polaroidView.photo = #imageLiteral(resourceName: "Mathias")
+    polaroidView.descriptionText = growsSinceText
+    
+    return polaroidView
   }
   
   private func fillWithPolaroids() {
     
     for _ in polaroids {
       
-      guard let polaroidView = Bundle.main.loadNibNamed("PolaroidView", owner: self, options: nil)?.first as? PolaroidView else {
+      guard let polaroidView = createPolaroid() else {
         return
       }
-      
-      polaroidView.photo = #imageLiteral(resourceName: "Mathias")
-      polaroidView.descriptionText = growsSinceText
       
       polaroidView.translatesAutoresizingMaskIntoConstraints = false
       
@@ -118,12 +156,4 @@ class ViewController: UIViewController {
       return "Wächst seit \(difference) Tagen"
     }
   }
-}
-
-extension ViewController: UIScrollViewDelegate {
-  
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    print(#function)
-  }
-  
 }

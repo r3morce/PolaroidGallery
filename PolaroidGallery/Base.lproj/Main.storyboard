@@ -43,16 +43,26 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ymk-yT-vEB"/>
                                 </connections>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7E-Ac-cie" userLabel="Add New Polaroid Button">
+                                <rect key="frame" x="187" y="621" width="172" height="30"/>
+                                <state key="normal" title="Add New Polaroid Button"/>
+                                <connections>
+                                    <action selector="addNewPolaroid" destination="BYZ-38-t0r" eventType="touchUpInside" id="PtG-r4-nBn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="FSQ-Qt-EpB" secondAttribute="trailing" id="Pkz-Eg-tQO"/>
                             <constraint firstItem="FSQ-Qt-EpB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="TIW-06-fNb"/>
+                            <constraint firstAttribute="trailing" secondItem="M7E-Ac-cie" secondAttribute="trailing" constant="16" id="WJl-JI-cA2"/>
                             <constraint firstItem="FSQ-Qt-EpB" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.7" id="eW4-P6-fSg"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="M7E-Ac-cie" secondAttribute="bottom" constant="16" id="oMh-b1-Kus"/>
                             <constraint firstItem="FSQ-Qt-EpB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="otK-A2-O2w"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addNewPolaroidButton" destination="M7E-Ac-cie" id="Zdd-EW-Gcq"/>
                         <outlet property="containerView" destination="E07-jD-gRc" id="R4y-qu-ZbI"/>
                         <outlet property="containerViewWidthConstraint" destination="oyz-Lo-gNM" id="bfP-KC-HVj"/>
                         <outlet property="scrollView" destination="FSQ-Qt-EpB" id="Kdt-HQ-XIh"/>

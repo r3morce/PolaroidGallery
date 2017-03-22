@@ -16,13 +16,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oNT-TI-0Vf" userLabel="Polaroid Frame View">
-                    <rect key="frame" x="69" y="119" width="300" height="350"/>
+                    <rect key="frame" x="94" y="144" width="250" height="300"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TsU-Fe-EVb" userLabel="Photo Image View">
-                            <rect key="frame" x="8" y="8" width="284" height="276"/>
+                            <rect key="frame" x="8" y="8" width="234" height="226"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ves-dR-NQH" userLabel="Description Label">
-                            <rect key="frame" x="8" y="292" width="284" height="50"/>
+                            <rect key="frame" x="8" y="242" width="234" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="9db-zo-OW2"/>
                             </constraints>
@@ -38,8 +38,8 @@
                         <constraint firstAttribute="bottom" secondItem="Ves-dR-NQH" secondAttribute="bottom" constant="8" id="FLZ-0W-cpo"/>
                         <constraint firstItem="TsU-Fe-EVb" firstAttribute="top" secondItem="oNT-TI-0Vf" secondAttribute="top" constant="8" id="OYH-0P-xPe"/>
                         <constraint firstItem="Ves-dR-NQH" firstAttribute="leading" secondItem="oNT-TI-0Vf" secondAttribute="leading" constant="8" id="cE6-Zi-57b"/>
-                        <constraint firstAttribute="height" constant="350" id="hKR-Ww-DMZ"/>
-                        <constraint firstAttribute="width" constant="300" id="rHO-MS-MBL"/>
+                        <constraint firstAttribute="height" constant="300" id="hKR-Ww-DMZ"/>
+                        <constraint firstAttribute="width" constant="250" id="rHO-MS-MBL"/>
                         <constraint firstAttribute="trailing" secondItem="TsU-Fe-EVb" secondAttribute="trailing" constant="8" id="tNI-nu-ToV"/>
                         <constraint firstItem="Ves-dR-NQH" firstAttribute="top" secondItem="TsU-Fe-EVb" secondAttribute="bottom" constant="8" id="wRN-0L-FX0"/>
                         <constraint firstItem="TsU-Fe-EVb" firstAttribute="leading" secondItem="oNT-TI-0Vf" secondAttribute="leading" constant="8" id="xPK-1N-62Z"/>
