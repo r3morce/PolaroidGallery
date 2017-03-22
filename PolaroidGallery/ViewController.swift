@@ -64,14 +64,14 @@ class ViewController: UIViewController {
     polaroids.append("new")
   }
   
-  private func animatePolaroids(hasNewPolaroid: Bool = true) {
+  private func animatePolaroids(hasNewPolaroid: Bool = false) {
 
     guard polaroidViews.count>1 else {
       return
     }
     
-    let firstPolaroid = polaroidViews[0]
-    let secondPolaroid = polaroidViews[1]
+    let firstPolaroid = polaroidViews.last!
+    let secondPolaroid = polaroidViews[polaroidViews.count-2]
     
     let firstPolaroidCenter = firstPolaroid.center
     let secondPolaroidCenter = secondPolaroid.center
@@ -80,19 +80,20 @@ class ViewController: UIViewController {
       
       firstPolaroid.center.x -= firstPolaroid.frame.width
       
-      UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+      UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear, animations: {
         firstPolaroid.center = firstPolaroidCenter
       }, completion: nil)
       
     } else {
       
+      firstPolaroid.center.x += firstPolaroid.frame.width
       secondPolaroid.center.x += secondPolaroid.frame.width
       
-      UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+      UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear, animations: {
         firstPolaroid.center = firstPolaroidCenter
       }, completion: nil)
       
-      UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveLinear, animations: {
+      UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveLinear, animations: {
         secondPolaroid.center = secondPolaroidCenter
       }, completion: nil)
     }
@@ -103,6 +104,8 @@ class ViewController: UIViewController {
     guard let polaroidView = Bundle.main.loadNibNamed("PolaroidView", owner: self, options: nil)?.first as? PolaroidView else {
       return nil
     }
+    
+    polaroidView.translatesAutoresizingMaskIntoConstraints = false
     
     polaroidView.photo = #imageLiteral(resourceName: "Mathias")
     polaroidView.descriptionText = growsSinceText
@@ -118,22 +121,21 @@ class ViewController: UIViewController {
         return
       }
       
-      polaroidView.translatesAutoresizingMaskIntoConstraints = false
-      
       containerView.addSubview(polaroidView)
       
       if polaroidViews.isEmpty {
         
-        polaroidView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: 8).isActive = true
+        polaroidView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -64).isActive = true
         
       } else {
         
-        containerView.removeConstraint(leftMostConstraint!)
-        leftMostConstraint = polaroidView.leftAnchor.constraint(equalTo: polaroidViews.last!.rightAnchor, constant: 8)
         polaroidView.rightAnchor.constraint(equalTo: polaroidViews.last!.leftAnchor, constant: 8).isActive = true
       }
 
-      leftMostConstraint = polaroidView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8)
+      if let leftMostConstraint = leftMostConstraint {
+        containerView.removeConstraint(leftMostConstraint)
+      }
+      leftMostConstraint = polaroidView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 32)
       leftMostConstraint?.isActive = true
       
       polaroidView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8).isActive = true
@@ -142,8 +144,6 @@ class ViewController: UIViewController {
       
       polaroidViews.append(polaroidView)
     }
-    
-    view.layoutIfNeeded()
   }
   
   private var growsSinceText: String {
