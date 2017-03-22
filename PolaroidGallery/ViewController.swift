@@ -27,8 +27,6 @@ class ViewController: UIViewController {
     }
   }
   
-  @IBOutlet weak var containerViewWidthConstraint: NSLayoutConstraint!
-  
   @IBOutlet private weak var addNewPolaroidButton: UIButton! {
     didSet {
       addNewPolaroidButton.setTitle("Hinzufügen", for: .normal)
@@ -46,7 +44,6 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    containerViewWidthConstraint.constant = view.frame.width*CGFloat(polaroids.count-1)
     fillWithPolaroids()
   }
   

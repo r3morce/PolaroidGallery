@@ -25,12 +25,9 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSQ-Qt-EpB">
                                 <rect key="frame" x="-12" y="0.0" width="375" height="467"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E07-jD-gRc" userLabel="Container View">
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E07-jD-gRc" userLabel="Container View">
                                         <rect key="frame" x="0.0" y="0.0" width="1000" height="467"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="1000" id="oyz-Lo-gNM"/>
-                                        </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -64,7 +61,6 @@
                     <connections>
                         <outlet property="addNewPolaroidButton" destination="M7E-Ac-cie" id="Zdd-EW-Gcq"/>
                         <outlet property="containerView" destination="E07-jD-gRc" id="R4y-qu-ZbI"/>
-                        <outlet property="containerViewWidthConstraint" destination="oyz-Lo-gNM" id="bfP-KC-HVj"/>
                         <outlet property="scrollView" destination="FSQ-Qt-EpB" id="Kdt-HQ-XIh"/>
                     </connections>
                 </viewController>
