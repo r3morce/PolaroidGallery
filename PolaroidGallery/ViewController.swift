@@ -55,16 +55,38 @@ class ViewController: UIViewController {
   
   @IBAction private func addNewPolaroid() {
     
-    guard let polaroidView = createPolaroid() else {
+    guard let newPolaroidView = createPolaroid() else {
       return
     }
     
-    polaroidViews.append(polaroidView)
+    let previousPolaroidView = polaroidViews.last!
+    
+    newPolaroidView.center.x -= view.frame.width*2
+    
+    containerView.addSubview(newPolaroidView)
+    
+    newPolaroidView.rightAnchor.constraint(equalTo: previousPolaroidView.leftAnchor, constant: 8).isActive = true
+    
+    if let leftMostConstraint = leftMostConstraint {
+      containerView.removeConstraint(leftMostConstraint)
+    }
+    leftMostConstraint = newPolaroidView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 32)
+    leftMostConstraint?.isActive = true
+    
+    newPolaroidView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8).isActive = true
+    newPolaroidView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8).isActive = true
+    newPolaroidView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8).isActive = true
+    
+    polaroidViews.append(newPolaroidView)
     
     polaroids.append("new")
+    
+    UIView.animate(withDuration: 1, delay: 0, options: .transitionCurlUp, animations: {
+      self.containerView.layoutIfNeeded()
+    }, completion: nil)
   }
   
-  private func animatePolaroids(hasNewPolaroid: Bool = false) {
+  private func animatePolaroids(hasNewPolaroid: Bool = true) {
 
     guard polaroidViews.count>1 else {
       return
@@ -107,7 +129,7 @@ class ViewController: UIViewController {
     
     polaroidView.translatesAutoresizingMaskIntoConstraints = false
     
-    polaroidView.photo = #imageLiteral(resourceName: "Mathias")
+    polaroidView.photo = #imageLiteral(resourceName: "Mathias-1")
     polaroidView.descriptionText = growsSinceText
     
     return polaroidView
@@ -124,11 +146,8 @@ class ViewController: UIViewController {
       containerView.addSubview(polaroidView)
       
       if polaroidViews.isEmpty {
-        
         polaroidView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -64).isActive = true
-        
       } else {
-        
         polaroidView.rightAnchor.constraint(equalTo: polaroidViews.last!.leftAnchor, constant: 8).isActive = true
       }
 
