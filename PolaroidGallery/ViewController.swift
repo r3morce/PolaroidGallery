@@ -39,6 +39,7 @@ class ViewController: UIViewController {
   
   private var polaroids = ["a", "b", "c", "d", "e", "f", "g"]
   private var polaroidViews: [PolaroidView] = []
+  private var leftMostConstraint: NSLayoutConstraint?
   
   // MARK: - Functions
   
@@ -64,8 +65,6 @@ class ViewController: UIViewController {
     polaroidViews.append(polaroidView)
     
     polaroids.append("new")
-    
-    
   }
   
   private func animatePolaroids(hasNewPolaroid: Bool = true) {
@@ -126,13 +125,28 @@ class ViewController: UIViewController {
       
       containerView.addSubview(polaroidView)
       
+      if polaroidViews.isEmpty {
+        
+        polaroidView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: 8).isActive = true
+        
+      } else {
+        
+        containerView.removeConstraint(leftMostConstraint!)
+        leftMostConstraint = polaroidView.leftAnchor.constraint(equalTo: polaroidViews.last!.rightAnchor, constant: 8)
+        polaroidView.rightAnchor.constraint(equalTo: polaroidViews.last!.leftAnchor, constant: 8).isActive = true
+      }
+
+      leftMostConstraint = polaroidView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8)
+      leftMostConstraint?.isActive = true
+      
       polaroidView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8).isActive = true
       polaroidView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8).isActive = true
-      polaroidView.leftAnchor.constraint(equalTo: polaroidViews.isEmpty ? containerView.leftAnchor : polaroidViews[polaroidViews.count-1].rightAnchor, constant: 8).isActive = true
       polaroidView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8).isActive = true
       
       polaroidViews.append(polaroidView)
     }
+    
+    view.layoutIfNeeded()
   }
   
   private var growsSinceText: String {
