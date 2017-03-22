@@ -30,6 +30,8 @@ class PolaroidView: UIView {
   
   @IBOutlet private weak var polaroidFrameView: UIView! {
     didSet {
+      polaroidFrameView.layer.shouldRasterize = true
+      polaroidFrameView.layer.rasterizationScale = UIScreen.main.scale
       polaroidFrameView.transform = CGAffineTransform(rotationAngle: randomRotationInRad)
     }
   }
