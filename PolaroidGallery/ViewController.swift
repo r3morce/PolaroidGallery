@@ -61,7 +61,8 @@ class ViewController: UIViewController {
     
     let previousPolaroidView = polaroidViews.last!
     
-    newPolaroidView.center.x -= view.frame.width*2
+    newPolaroidView.center.y = scrollView.center.y
+    newPolaroidView.center.x -= scrollView.frame.width*2
     
     containerView.addSubview(newPolaroidView)
     
@@ -82,7 +83,7 @@ class ViewController: UIViewController {
     polaroids.append("new")
     
     UIView.animate(withDuration: 1, delay: 0, options: .transitionCurlUp, animations: {
-      self.containerView.layoutIfNeeded()
+      self.scrollView.layoutIfNeeded()
     }, completion: nil)
   }
   

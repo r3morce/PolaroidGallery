@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PolaroidGallery/ViewController.swift"
-            timestampString = "511897011.577159"
+            timestampString = "511944046.539559"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,13 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "PolaroidGallery/ViewController.swift"
-            timestampString = "511901143.151287"
+            timestampString = "511950329.991033"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "fillWithPolaroids()"
-            landmarkType = "7">
+            startingLineNumber = "206"
+            endingLineNumber = "206">
             <Actions>
                <BreakpointActionProxy
                   ActionExtensionID = "Xcode.BreakpointAction.Log">
@@ -51,28 +49,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PolaroidGallery/ViewController.swift"
-            timestampString = "511901143.151287"
+            timestampString = "511950329.991033"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "animatePolaroids(hasNewPolaroid:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PolaroidGallery/ViewController.swift"
-            timestampString = "511901058.172838"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "addNewPolaroid()"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "fillWithPolaroids()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
