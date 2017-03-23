@@ -34,13 +34,16 @@ class ViewController: UIViewController {
   }
   
   // MARK: - Properties
+
+  fileprivate var polaroidViews: [PolaroidView] = []
+  fileprivate var hasNewPolaroid: Bool = false
+  fileprivate var photos = [#imageLiteral(resourceName: "Mathias-1"), #imageLiteral(resourceName: "Mathias-2")]
   
-  private var polaroids = ["a", "b", "c", "d", "e", "f", "g"]
-  private var polaroidViews: [PolaroidView] = []
   private var leftMostConstraint: NSLayoutConstraint?
   
   // MARK: - IBActions
   
+  // Todo: Refactor outlet name
   @IBAction private func addNewPolaroid() {
     
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -49,11 +52,27 @@ class ViewController: UIViewController {
     }
     
     let takePhotoAction = UIAlertAction(title: "Foto machen", style: .default) { _ in
+      
       // Take Photo
+      if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
+        imagePicker.allowsEditing = true
+        self.present(imagePicker, animated: true, completion: nil)
+      }
     }
     
     let selectFromLibraryAction = UIAlertAction(title: "Foto auswählen", style: .default) { _ in
+      
       // Open library
+      if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
+        imagePicker.allowsEditing = true
+        self.present(imagePicker, animated: true, completion: nil)
+      }
     }
     
     alertController.addAction(cancelAction)
@@ -63,9 +82,30 @@ class ViewController: UIViewController {
     self.present(alertController, animated: true)
   }
   
-  private func addDummyPolaroid() {
+  // MARK: - Lifecircle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-    guard let newPolaroidView = createPolaroid() else {
+    fillWithPolaroids()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    if hasNewPolaroid {
+      addPolaroid(photo: photos.last!, descriptionText: growsSinceText)
+    } else {
+      animatePolaroids()
+    }
+  }
+  
+  // MARK: - Functions
+  
+  // Todo: Refactor function name
+  fileprivate func addPolaroid(photo: UIImage, descriptionText: String) {
+    
+    guard let newPolaroidView = createPolaroid(photo: photo, descriptionText: descriptionText) else {
       return
     }
     
@@ -90,28 +130,14 @@ class ViewController: UIViewController {
     
     polaroidViews.append(newPolaroidView)
     
-    polaroids.append("new")
+    photos.append(photo)
     
-    UIView.animate(withDuration: 1, delay: 0, options: .transitionCurlUp, animations: {
+    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
       self.scrollView.layoutIfNeeded()
     }, completion: nil)
   }
   
-  // MARK: - Functions
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    fillWithPolaroids()
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    
-    animatePolaroids()
-  }
-  
-  private func animatePolaroids(hasNewPolaroid: Bool = false) {
+  private func animatePolaroids() {
 
     guard polaroidViews.count>1 else {
       return
@@ -144,9 +170,11 @@ class ViewController: UIViewController {
         secondPolaroid.center = secondPolaroidCenter
       }, completion: nil)
     }
+    
+    self.hasNewPolaroid = false
   }
   
-  private func createPolaroid() -> PolaroidView? {
+  private func createPolaroid(photo: UIImage, descriptionText: String) -> PolaroidView? {
     
     guard let polaroidView = Bundle.main.loadNibNamed("PolaroidView", owner: self, options: nil)?.first as? PolaroidView else {
       return nil
@@ -154,17 +182,17 @@ class ViewController: UIViewController {
     
     polaroidView.translatesAutoresizingMaskIntoConstraints = false
     
-    polaroidView.photo = #imageLiteral(resourceName: "Mathias-1")
-    polaroidView.descriptionText = growsSinceText
+    polaroidView.photo = photo
+    polaroidView.descriptionText = descriptionText
     
     return polaroidView
   }
   
   private func fillWithPolaroids() {
     
-    for _ in polaroids {
+    for photo in photos {
       
-      guard let polaroidView = createPolaroid() else {
+      guard let polaroidView = createPolaroid(photo: photo, descriptionText: growsSinceText) else {
         return
       }
       
@@ -210,5 +238,22 @@ class ViewController: UIViewController {
       
       return "Wächst seit \(difference) Tagen"
     }
+  }
+}
+
+// MARK: - UIImagePickerControllerDelegate
+
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    
+    if let photo = info["UIImagePickerControllerEditedImage"] as? UIImage {
+      photos.append(photo)
+      hasNewPolaroid = true
+    } else {
+      print("Something went wrong")
+    }
+    
+    self.dismiss(animated: true, completion: nil)
   }
 }

@@ -14,9 +14,9 @@ class PolaroidView: UIView {
   
   var photo: UIImage? {
     didSet {
-      UIView.transition(with: photoImageView, duration: 0.5, options: [.transitionCrossDissolve], animations: {
-        self.photoImageView.image = #imageLiteral(resourceName: "Mathias-1") // <-- see folder Assets
-      }, completion: nil)
+       UIView.transition(with: photoImageView, duration: 0.5, options: [.transitionCrossDissolve], animations: {
+        self.photoImageView.image = self.photo
+       }, completion: nil)
     }
   }
   
