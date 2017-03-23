@@ -39,21 +39,31 @@ class ViewController: UIViewController {
   private var polaroidViews: [PolaroidView] = []
   private var leftMostConstraint: NSLayoutConstraint?
   
-  // MARK: - Functions
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    fillWithPolaroids()
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    
-    animatePolaroids()
-  }
+  // MARK: - IBActions
   
   @IBAction private func addNewPolaroid() {
+    
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+    let cancelAction = UIAlertAction(title: "Abbrechen", style: .cancel) { action in
+    }
+    
+    let takePhotoAction = UIAlertAction(title: "Foto machen", style: .default) { _ in
+      // Take Photo
+    }
+    
+    let selectFromLibraryAction = UIAlertAction(title: "Foto auswählen", style: .default) { _ in
+      // Open library
+    }
+    
+    alertController.addAction(cancelAction)
+    alertController.addAction(takePhotoAction)
+    alertController.addAction(selectFromLibraryAction)
+    
+    self.present(alertController, animated: true)
+  }
+  
+  private func addDummyPolaroid() {
     
     guard let newPolaroidView = createPolaroid() else {
       return
@@ -87,7 +97,21 @@ class ViewController: UIViewController {
     }, completion: nil)
   }
   
-  private func animatePolaroids(hasNewPolaroid: Bool = true) {
+  // MARK: - Functions
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    fillWithPolaroids()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    animatePolaroids()
+  }
+  
+  private func animatePolaroids(hasNewPolaroid: Bool = false) {
 
     guard polaroidViews.count>1 else {
       return
