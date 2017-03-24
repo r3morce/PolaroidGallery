@@ -262,7 +262,24 @@ class ViewController: UIViewController {
   func polaroidTapped(gesture: UIGestureRecognizer) {
     print("Image Tapped \(gesture.view)")
     
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+    }
+    
+    let deletePhotoAction = UIAlertAction(title: "Delete photo", style: .destructive) { _ in
+      
+    }
+    
+    let changeDateAction = UIAlertAction(title: "Change date", style: .default) { _ in
+      
+    }
+    
+    alertController.addAction(cancelAction)
+    alertController.addAction(deletePhotoAction)
+    alertController.addAction(changeDateAction)
+    
+    self.present(alertController, animated: true)
   }
   
   private func growsSinceText(from photoDate: Date) -> String {
