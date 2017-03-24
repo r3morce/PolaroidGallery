@@ -34,10 +34,16 @@ class ViewController: UIViewController {
   }
   
   // MARK: - Properties
-
+  
   fileprivate var polaroidViews: [PolaroidView] = []
-  fileprivate var hasNewPolaroid: Bool = false
   fileprivate var photos = [#imageLiteral(resourceName: "Mathias-1"), #imageLiteral(resourceName: "Mathias-2")]
+  fileprivate var status: Status = .firstStart
+  
+  fileprivate enum Status {
+    case firstStart
+    case newPhoto
+    case returning
+  }
   
   private var leftMostConstraint: NSLayoutConstraint?
   
@@ -48,10 +54,10 @@ class ViewController: UIViewController {
     
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
-    let cancelAction = UIAlertAction(title: "Abbrechen", style: .cancel) { action in
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
     }
     
-    let takePhotoAction = UIAlertAction(title: "Foto machen", style: .default) { _ in
+    let takePhotoAction = UIAlertAction(title: "Take photo", style: .default) { _ in
       
       // Take Photo
       if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
@@ -63,7 +69,7 @@ class ViewController: UIViewController {
       }
     }
     
-    let selectFromLibraryAction = UIAlertAction(title: "Foto auswählen", style: .default) { _ in
+    let selectFromLibraryAction = UIAlertAction(title: "Select form library", style: .default) { _ in
       
       // Open library
       if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
@@ -93,11 +99,15 @@ class ViewController: UIViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    if hasNewPolaroid {
+    switch status {
+    case .newPhoto:
       addPolaroid(photo: photos.last!, descriptionText: growsSinceText)
-    } else {
+    case .firstStart:
       animatePolaroids()
+    case .returning:()
     }
+    
+    status = .returning
   }
   
   // MARK: - Functions
@@ -138,7 +148,7 @@ class ViewController: UIViewController {
   }
   
   private func animatePolaroids() {
-
+    
     guard polaroidViews.count>1 else {
       return
     }
@@ -149,29 +159,16 @@ class ViewController: UIViewController {
     let firstPolaroidCenter = firstPolaroid.center
     let secondPolaroidCenter = secondPolaroid.center
     
-    if hasNewPolaroid {
-      
-      firstPolaroid.center.x -= firstPolaroid.frame.width
-      
-      UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear, animations: {
-        firstPolaroid.center = firstPolaroidCenter
-      }, completion: nil)
-      
-    } else {
-      
-      firstPolaroid.center.x += firstPolaroid.frame.width
-      secondPolaroid.center.x += secondPolaroid.frame.width
-      
-      UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear, animations: {
-        firstPolaroid.center = firstPolaroidCenter
-      }, completion: nil)
-      
-      UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveLinear, animations: {
-        secondPolaroid.center = secondPolaroidCenter
-      }, completion: nil)
-    }
+    firstPolaroid.center.x += firstPolaroid.frame.width
+    secondPolaroid.center.x += secondPolaroid.frame.width
     
-    self.hasNewPolaroid = false
+    UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear, animations: {
+      firstPolaroid.center = firstPolaroidCenter
+    }, completion: nil)
+    
+    UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveLinear, animations: {
+      secondPolaroid.center = secondPolaroidCenter
+    }, completion: nil)
   }
   
   private func createPolaroid(photo: UIImage, descriptionText: String) -> PolaroidView? {
@@ -203,7 +200,7 @@ class ViewController: UIViewController {
       } else {
         polaroidView.rightAnchor.constraint(equalTo: polaroidViews.last!.leftAnchor, constant: 8).isActive = true
       }
-
+      
       if let leftMostConstraint = leftMostConstraint {
         containerView.removeConstraint(leftMostConstraint)
       }
@@ -249,7 +246,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     
     if let photo = info["UIImagePickerControllerEditedImage"] as? UIImage {
       photos.append(photo)
-      hasNewPolaroid = true
+      status = .newPhoto
     } else {
       print("Something went wrong")
     }
