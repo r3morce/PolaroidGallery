@@ -12,6 +12,8 @@ class PolaroidView: UIView {
   
   // MARK: - Properties
   
+  var entity: PhotoEntity?
+  
   var image: UIImage? {
     didSet {
        UIView.transition(with: photoImageView, duration: 0.5, options: [.transitionCrossDissolve], animations: {

@@ -122,11 +122,6 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-//    photos.append(Photo(image: #imageLiteral(resourceName: "Mathias-2"), date: randomDate))
-//    photos.append(Photo(image: #imageLiteral(resourceName: "Mathias-1"), date: randomDate))
-    
-    
-    
     fillWithPolaroids()
   }
   
@@ -217,25 +212,34 @@ class ViewController: UIViewController {
       return nil
     }
     
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.polaroidTapped(gesture:)))
+    polaroidView.addGestureRecognizer(tapGesture)
+    polaroidView.isUserInteractionEnabled = true
+    
     polaroidView.translatesAutoresizingMaskIntoConstraints = false
     
     polaroidView.image = image
     polaroidView.descriptionText = growsSinceText(from: date)
+    polaroidView.entity = photo
     
     return polaroidView
   }
   
   private func fillWithPolaroids() {
     
+    UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
+      for subview in self.containerView.subviews {
+        subview.removeFromSuperview()
+      }
+    }, completion: nil)
+    
+    polaroidViews = []
+    
     for photo in photos {
       
       guard let polaroidView = createPolaroid(photo: photo) else {
         return
       }
-      
-      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.polaroidTapped(gesture:)))
-      polaroidView.addGestureRecognizer(tapGesture)
-      polaroidView.isUserInteractionEnabled = true
       
       containerView.addSubview(polaroidView)
       
@@ -262,13 +266,17 @@ class ViewController: UIViewController {
   func polaroidTapped(gesture: UIGestureRecognizer) {
     print("Image Tapped \(gesture.view)")
     
+    guard let polaroidView = gesture.view as? PolaroidView else {
+      return
+    }
+    
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
     }
     
     let deletePhotoAction = UIAlertAction(title: "Delete photo", style: .destructive) { _ in
-      
+      self.remove(polaroidView: polaroidView)
     }
     
     let changeDateAction = UIAlertAction(title: "Change date", style: .default) { _ in
@@ -280,6 +288,18 @@ class ViewController: UIViewController {
     alertController.addAction(changeDateAction)
     
     self.present(alertController, animated: true)
+  }
+  
+  func remove(polaroidView: PolaroidView) {
+   
+    guard let entity = polaroidView.entity else {
+      return
+    }
+    
+    managedContext.delete(entity)
+    appDelegate.saveContext()
+    
+    self.fillWithPolaroids()
   }
   
   private func growsSinceText(from photoDate: Date) -> String {
