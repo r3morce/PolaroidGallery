@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9E35A0681E7C2DF800A80AAE /* PolaroidView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E35A0671E7C2DF800A80AAE /* PolaroidView.xib */; };
-		9E35A06A1E7C2E5600A80AAE /* PolaroidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E35A0691E7C2E5600A80AAE /* PolaroidView.swift */; };
-		9E35A06C1E7C2FD900A80AAE /* Quikhand.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E35A06B1E7C2FD900A80AAE /* Quikhand.ttf */; };
-		9E418AEF1E84F85400409C25 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E418AEE1E84F85400409C25 /* Photo.swift */; };
+		9E418AF21E84FEBE00409C25 /* Quikhand.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E418AF11E84FEBE00409C25 /* Quikhand.ttf */; };
+		9E418AF61E84FF1B00409C25 /* PolaroidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E418AF41E84FF1B00409C25 /* PolaroidView.swift */; };
+		9E418AF71E84FF1B00409C25 /* PolaroidView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E418AF51E84FF1B00409C25 /* PolaroidView.xib */; };
+		9E418AFA1E84FF4F00409C25 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E418AF91E84FF4F00409C25 /* Photo.swift */; };
 		9E962FA91E81988100922EEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF24ADC1E7A6830008793AB /* ViewController.swift */; };
 		9EF24ADB1E7A6830008793AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF24ADA1E7A6830008793AB /* AppDelegate.swift */; };
 		9EF24AE01E7A6830008793AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EF24ADE1E7A6830008793AB /* Main.storyboard */; };
@@ -19,10 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9E35A0671E7C2DF800A80AAE /* PolaroidView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PolaroidView.xib; sourceTree = "<group>"; };
-		9E35A0691E7C2E5600A80AAE /* PolaroidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolaroidView.swift; sourceTree = "<group>"; };
-		9E35A06B1E7C2FD900A80AAE /* Quikhand.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quikhand.ttf; sourceTree = "<group>"; };
-		9E418AEE1E84F85400409C25 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		9E418AF11E84FEBE00409C25 /* Quikhand.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quikhand.ttf; sourceTree = "<group>"; };
+		9E418AF41E84FF1B00409C25 /* PolaroidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolaroidView.swift; sourceTree = "<group>"; };
+		9E418AF51E84FF1B00409C25 /* PolaroidView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PolaroidView.xib; sourceTree = "<group>"; };
+		9E418AF91E84FF4F00409C25 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		9EF24AD71E7A6830008793AB /* PolaroidGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolaroidGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EF24ADA1E7A6830008793AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9EF24ADC1E7A6830008793AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +43,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E418AF01E84FE8B00409C25 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				9E418AF11E84FEBE00409C25 /* Quikhand.ttf */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		9E418AF31E84FEFB00409C25 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9E418AF41E84FF1B00409C25 /* PolaroidView.swift */,
+				9E418AF51E84FF1B00409C25 /* PolaroidView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9E418AF81E84FF3600409C25 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9E418AF91E84FF4F00409C25 /* Photo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		9EF24ACE1E7A6830008793AB = {
 			isa = PBXGroup;
 			children = (
@@ -62,16 +87,15 @@
 		9EF24AD91E7A6830008793AB /* PolaroidGallery */ = {
 			isa = PBXGroup;
 			children = (
-				9EF24ADA1E7A6830008793AB /* AppDelegate.swift */,
 				9EF24ADC1E7A6830008793AB /* ViewController.swift */,
-				9E418AEE1E84F85400409C25 /* Photo.swift */,
 				9EF24ADE1E7A6830008793AB /* Main.storyboard */,
 				9EF24AE11E7A6830008793AB /* Assets.xcassets */,
-				9E35A06B1E7C2FD900A80AAE /* Quikhand.ttf */,
+				9E418AF81E84FF3600409C25 /* Model */,
+				9E418AF31E84FEFB00409C25 /* View */,
+				9E418AF01E84FE8B00409C25 /* Resource */,
 				9EF24AE31E7A6830008793AB /* LaunchScreen.storyboard */,
+				9EF24ADA1E7A6830008793AB /* AppDelegate.swift */,
 				9EF24AE61E7A6830008793AB /* Info.plist */,
-				9E35A0671E7C2DF800A80AAE /* PolaroidView.xib */,
-				9E35A0691E7C2E5600A80AAE /* PolaroidView.swift */,
 			);
 			path = PolaroidGallery;
 			sourceTree = "<group>";
@@ -138,9 +162,9 @@
 			files = (
 				9EF24AE51E7A6830008793AB /* LaunchScreen.storyboard in Resources */,
 				9EF24AE21E7A6830008793AB /* Assets.xcassets in Resources */,
-				9E35A0681E7C2DF800A80AAE /* PolaroidView.xib in Resources */,
 				9EF24AE01E7A6830008793AB /* Main.storyboard in Resources */,
-				9E35A06C1E7C2FD900A80AAE /* Quikhand.ttf in Resources */,
+				9E418AF71E84FF1B00409C25 /* PolaroidView.xib in Resources */,
+				9E418AF21E84FEBE00409C25 /* Quikhand.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,10 +175,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E418AEF1E84F85400409C25 /* Photo.swift in Sources */,
+				9E418AFA1E84FF4F00409C25 /* Photo.swift in Sources */,
 				9E962FA91E81988100922EEE /* ViewController.swift in Sources */,
+				9E418AF61E84FF1B00409C25 /* PolaroidView.swift in Sources */,
 				9EF24ADB1E7A6830008793AB /* AppDelegate.swift in Sources */,
-				9E35A06A1E7C2E5600A80AAE /* PolaroidView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
