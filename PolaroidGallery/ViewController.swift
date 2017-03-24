@@ -229,10 +229,10 @@ class ViewController: UIViewController {
   private func growsSinceText(from photoDate: Date) -> String {
     
     if Calendar.current.isDateInToday(photoDate) {
-      return "Heute erst angefangen ;-)"
+      return "Started today ;-)"
       
     } else if Calendar.current.isDateInYesterday(photoDate) {
-      return "Gestern angefangen"
+      return "Started yesterday"
       
     } else {
       
@@ -242,7 +242,7 @@ class ViewController: UIViewController {
       
       let difference = endInDays-startInDays
       
-      return "Wächst seit \(difference) Tagen"
+      return "Grows since \(difference) days"
     }
   }
 }
@@ -256,8 +256,6 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     if let photo = info["UIImagePickerControllerEditedImage"] as? UIImage {
       photos.append(Photo(image: photo, date: randomDate))
       status = .newPhoto
-    } else {
-      print("Something went wrong")
     }
     
     self.dismiss(animated: true, completion: nil)
