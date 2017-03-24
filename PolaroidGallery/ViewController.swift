@@ -29,21 +29,29 @@ class ViewController: UIViewController {
   
   @IBOutlet private weak var addNewPolaroidButton: UIButton! {
     didSet {
-      addNewPolaroidButton.setTitle("Hinzufügen", for: .normal)
+      addNewPolaroidButton.setTitle("Add new photo", for: .normal)
     }
   }
   
   // MARK: - Properties
-  
-  fileprivate var polaroidViews: [PolaroidView] = []
-  fileprivate var photos = [#imageLiteral(resourceName: "Mathias-1"), #imageLiteral(resourceName: "Mathias-2")]
-  fileprivate var status: Status = .firstStart
   
   fileprivate enum Status {
     case firstStart
     case newPhoto
     case returning
   }
+
+  fileprivate var polaroidViews: [PolaroidView] = []
+
+  
+  fileprivate var status: Status = .firstStart
+
+  fileprivate var randomDate: Date {
+    let randomDate = Calendar.current.date(byAdding: .day, value: -Int(arc4random_uniform(400)), to: Date())! // up to 400 days in the past
+    return randomDate
+  }
+  
+  fileprivate var photos: [Photo] = []
   
   private var leftMostConstraint: NSLayoutConstraint?
   
@@ -93,6 +101,9 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    photos.append(Photo(image: #imageLiteral(resourceName: "Mathias-2"), date: randomDate))
+    photos.append(Photo(image: #imageLiteral(resourceName: "Mathias-1"), date: randomDate))
+    
     fillWithPolaroids()
   }
   
@@ -101,7 +112,7 @@ class ViewController: UIViewController {
     
     switch status {
     case .newPhoto:
-      addPolaroid(photo: photos.last!, descriptionText: growsSinceText)
+      addPolaroid(photo: photos.last!)
     case .firstStart:
       animatePolaroids()
     case .returning:()
@@ -113,9 +124,9 @@ class ViewController: UIViewController {
   // MARK: - Functions
   
   // Todo: Refactor function name
-  fileprivate func addPolaroid(photo: UIImage, descriptionText: String) {
+  fileprivate func addPolaroid(photo: Photo) {
     
-    guard let newPolaroidView = createPolaroid(photo: photo, descriptionText: descriptionText) else {
+    guard let newPolaroidView = createPolaroid(photo: photo) else {
       return
     }
     
@@ -171,7 +182,7 @@ class ViewController: UIViewController {
     }, completion: nil)
   }
   
-  private func createPolaroid(photo: UIImage, descriptionText: String) -> PolaroidView? {
+  private func createPolaroid(photo: Photo) -> PolaroidView? {
     
     guard let polaroidView = Bundle.main.loadNibNamed("PolaroidView", owner: self, options: nil)?.first as? PolaroidView else {
       return nil
@@ -179,8 +190,8 @@ class ViewController: UIViewController {
     
     polaroidView.translatesAutoresizingMaskIntoConstraints = false
     
-    polaroidView.photo = photo
-    polaroidView.descriptionText = descriptionText
+    polaroidView.image = photo.image
+    polaroidView.descriptionText = growsSinceText(from: photo.date)
     
     return polaroidView
   }
@@ -189,7 +200,7 @@ class ViewController: UIViewController {
     
     for photo in photos {
       
-      guard let polaroidView = createPolaroid(photo: photo, descriptionText: growsSinceText) else {
+      guard let polaroidView = createPolaroid(photo: photo) else {
         return
       }
       
@@ -215,20 +226,18 @@ class ViewController: UIViewController {
     }
   }
   
-  private var growsSinceText: String {
+  private func growsSinceText(from photoDate: Date) -> String {
     
-    let randomDate = Calendar.current.date(byAdding: .day, value: -Int(arc4random_uniform(400)), to: Date())! // up to 400 days in the past
-    
-    if Calendar.current.isDateInToday(randomDate) {
+    if Calendar.current.isDateInToday(photoDate) {
       return "Heute erst angefangen ;-)"
       
-    } else if Calendar.current.isDateInYesterday(randomDate) {
+    } else if Calendar.current.isDateInYesterday(photoDate) {
       return "Gestern angefangen"
       
     } else {
       
       // must be older than yesterday
-      let startInDays = Calendar.current.ordinality(of: .day, in: .era, for: randomDate)!
+      let startInDays = Calendar.current.ordinality(of: .day, in: .era, for: photoDate)!
       let endInDays = Calendar.current.ordinality(of: .day, in: .era, for: Date())!
       
       let difference = endInDays-startInDays
@@ -245,7 +254,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
     if let photo = info["UIImagePickerControllerEditedImage"] as? UIImage {
-      photos.append(photo)
+      photos.append(Photo(image: photo, date: randomDate))
       status = .newPhoto
     } else {
       print("Something went wrong")

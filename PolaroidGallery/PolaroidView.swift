@@ -12,10 +12,10 @@ class PolaroidView: UIView {
   
   // MARK: - Properties
   
-  var photo: UIImage? {
+  var image: UIImage? {
     didSet {
        UIView.transition(with: photoImageView, duration: 0.5, options: [.transitionCrossDissolve], animations: {
-        self.photoImageView.image = self.photo
+        self.photoImageView.image = self.image
        }, completion: nil)
     }
   }
