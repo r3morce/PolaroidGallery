@@ -10,7 +10,9 @@
 		9E418AF21E84FEBE00409C25 /* Quikhand.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E418AF11E84FEBE00409C25 /* Quikhand.ttf */; };
 		9E418AF61E84FF1B00409C25 /* PolaroidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E418AF41E84FF1B00409C25 /* PolaroidView.swift */; };
 		9E418AF71E84FF1B00409C25 /* PolaroidView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E418AF51E84FF1B00409C25 /* PolaroidView.xib */; };
-		9E418AFA1E84FF4F00409C25 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E418AF91E84FF4F00409C25 /* Photo.swift */; };
+		9E4D8E641E856ABA00FDFA2B /* Photos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E4D8E621E856ABA00FDFA2B /* Photos.xcdatamodeld */; };
+		9E4D8E671E856AD900FDFA2B /* PhotoEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4D8E651E856AD900FDFA2B /* PhotoEntity+CoreDataClass.swift */; };
+		9E4D8E681E856AD900FDFA2B /* PhotoEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4D8E661E856AD900FDFA2B /* PhotoEntity+CoreDataProperties.swift */; };
 		9E962FA91E81988100922EEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF24ADC1E7A6830008793AB /* ViewController.swift */; };
 		9EF24ADB1E7A6830008793AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF24ADA1E7A6830008793AB /* AppDelegate.swift */; };
 		9EF24AE01E7A6830008793AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EF24ADE1E7A6830008793AB /* Main.storyboard */; };
@@ -22,7 +24,9 @@
 		9E418AF11E84FEBE00409C25 /* Quikhand.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quikhand.ttf; sourceTree = "<group>"; };
 		9E418AF41E84FF1B00409C25 /* PolaroidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolaroidView.swift; sourceTree = "<group>"; };
 		9E418AF51E84FF1B00409C25 /* PolaroidView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PolaroidView.xib; sourceTree = "<group>"; };
-		9E418AF91E84FF4F00409C25 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		9E4D8E631E856ABA00FDFA2B /* Photos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Photos.xcdatamodel; sourceTree = "<group>"; };
+		9E4D8E651E856AD900FDFA2B /* PhotoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhotoEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9E4D8E661E856AD900FDFA2B /* PhotoEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhotoEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9EF24AD71E7A6830008793AB /* PolaroidGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolaroidGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EF24ADA1E7A6830008793AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9EF24ADC1E7A6830008793AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,9 +67,25 @@
 		9E418AF81E84FF3600409C25 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9E418AF91E84FF4F00409C25 /* Photo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		9E4D8E491E85233500FDFA2B /* Core data */ = {
+			isa = PBXGroup;
+			children = (
+				9E4D8E621E856ABA00FDFA2B /* Photos.xcdatamodeld */,
+			);
+			path = "Core data";
+			sourceTree = "<group>";
+		};
+		9E4D8E4D1E8523A800FDFA2B /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				9E4D8E651E856AD900FDFA2B /* PhotoEntity+CoreDataClass.swift */,
+				9E4D8E661E856AD900FDFA2B /* PhotoEntity+CoreDataProperties.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		9EF24ACE1E7A6830008793AB = {
@@ -90,6 +110,8 @@
 				9EF24ADC1E7A6830008793AB /* ViewController.swift */,
 				9EF24ADE1E7A6830008793AB /* Main.storyboard */,
 				9EF24AE11E7A6830008793AB /* Assets.xcassets */,
+				9E4D8E491E85233500FDFA2B /* Core data */,
+				9E4D8E4D1E8523A800FDFA2B /* Entities */,
 				9E418AF81E84FF3600409C25 /* Model */,
 				9E418AF31E84FEFB00409C25 /* View */,
 				9E418AF01E84FE8B00409C25 /* Resource */,
@@ -175,10 +197,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E418AFA1E84FF4F00409C25 /* Photo.swift in Sources */,
 				9E962FA91E81988100922EEE /* ViewController.swift in Sources */,
+				9E4D8E641E856ABA00FDFA2B /* Photos.xcdatamodeld in Sources */,
 				9E418AF61E84FF1B00409C25 /* PolaroidView.swift in Sources */,
 				9EF24ADB1E7A6830008793AB /* AppDelegate.swift in Sources */,
+				9E4D8E681E856AD900FDFA2B /* PhotoEntity+CoreDataProperties.swift in Sources */,
+				9E4D8E671E856AD900FDFA2B /* PhotoEntity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +373,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9E4D8E621E856ABA00FDFA2B /* Photos.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9E4D8E631E856ABA00FDFA2B /* Photos.xcdatamodel */,
+			);
+			currentVersion = 9E4D8E631E856ABA00FDFA2B /* Photos.xcdatamodel */;
+			path = Photos.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9EF24ACF1E7A6830008793AB /* Project object */;
 }

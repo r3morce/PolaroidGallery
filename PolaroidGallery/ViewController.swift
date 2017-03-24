@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
   
@@ -42,8 +43,6 @@ class ViewController: UIViewController {
   }
 
   fileprivate var polaroidViews: [PolaroidView] = []
-
-  
   fileprivate var status: Status = .firstStart
 
   fileprivate var randomDate: Date {
@@ -51,9 +50,31 @@ class ViewController: UIViewController {
     return randomDate
   }
   
-  fileprivate var photos: [Photo] = []
+  fileprivate var photos: [PhotoEntity] {
+    do {
+      let request = NSFetchRequest<PhotoEntity>(entityName: "PhotoEntity")
+      return try self.managedContext.fetch(request)      
+    } catch {
+      fatalError("Couldn't access photos")
+    }
+  }
+
   
   private var leftMostConstraint: NSLayoutConstraint?
+  
+  // MARK: Core data
+  
+  fileprivate var appDelegate: AppDelegate {
+    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+      return appDelegate
+    } else {
+      fatalError("Couln't access app delegate")
+    }
+  }
+  
+  fileprivate var managedContext: NSManagedObjectContext {
+    return appDelegate.persistentContainer.viewContext
+  }
   
   // MARK: - IBActions
   
@@ -101,8 +122,10 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    photos.append(Photo(image: #imageLiteral(resourceName: "Mathias-2"), date: randomDate))
-    photos.append(Photo(image: #imageLiteral(resourceName: "Mathias-1"), date: randomDate))
+//    photos.append(Photo(image: #imageLiteral(resourceName: "Mathias-2"), date: randomDate))
+//    photos.append(Photo(image: #imageLiteral(resourceName: "Mathias-1"), date: randomDate))
+    
+    
     
     fillWithPolaroids()
   }
@@ -112,7 +135,7 @@ class ViewController: UIViewController {
     
     switch status {
     case .newPhoto:
-      addPolaroid(photo: photos.last!)
+      addPolaroidToGalery(photo: photos.last!)
     case .firstStart:
       animatePolaroids()
     case .returning:()
@@ -124,20 +147,20 @@ class ViewController: UIViewController {
   // MARK: - Functions
   
   // Todo: Refactor function name
-  fileprivate func addPolaroid(photo: Photo) {
+  fileprivate func addPolaroidToGalery(photo: PhotoEntity) {
     
     guard let newPolaroidView = createPolaroid(photo: photo) else {
       return
     }
-    
-    let previousPolaroidView = polaroidViews.last!
     
     newPolaroidView.center.y = scrollView.center.y
     newPolaroidView.center.x -= scrollView.frame.width*2
     
     containerView.addSubview(newPolaroidView)
     
-    newPolaroidView.rightAnchor.constraint(equalTo: previousPolaroidView.leftAnchor, constant: 8).isActive = true
+    if let previousPolaroidView = polaroidViews.last {
+      newPolaroidView.rightAnchor.constraint(equalTo: previousPolaroidView.leftAnchor, constant: 8).isActive = true
+    }    
     
     if let leftMostConstraint = leftMostConstraint {
       containerView.removeConstraint(leftMostConstraint)
@@ -150,8 +173,6 @@ class ViewController: UIViewController {
     newPolaroidView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8).isActive = true
     
     polaroidViews.append(newPolaroidView)
-    
-    photos.append(photo)
     
     UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
       self.scrollView.layoutIfNeeded()
@@ -182,16 +203,24 @@ class ViewController: UIViewController {
     }, completion: nil)
   }
   
-  private func createPolaroid(photo: Photo) -> PolaroidView? {
+  private func createPolaroid(photo: PhotoEntity) -> PolaroidView? {
     
     guard let polaroidView = Bundle.main.loadNibNamed("PolaroidView", owner: self, options: nil)?.first as? PolaroidView else {
       return nil
     }
     
+    guard let data = photo.image as? Data, let image = UIImage(data: data, scale:1.0) else {
+      return nil
+    }
+    
+    guard let date = photo.date as? Date else {
+      return nil
+    }
+    
     polaroidView.translatesAutoresizingMaskIntoConstraints = false
     
-    polaroidView.image = photo.image
-    polaroidView.descriptionText = growsSinceText(from: photo.date)
+    polaroidView.image = image
+    polaroidView.descriptionText = growsSinceText(from: date)
     
     return polaroidView
   }
@@ -253,8 +282,13 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
-    if let photo = info["UIImagePickerControllerEditedImage"] as? UIImage {
-      photos.append(Photo(image: photo, date: randomDate))
+    if let image = info["UIImagePickerControllerEditedImage"] as? UIImage {
+      
+      let photo = NSEntityDescription.insertNewObject(forEntityName: "PhotoEntity", into: managedContext) as! PhotoEntity
+      photo.image = UIImagePNGRepresentation(image) as NSData?
+      photo.date = Date() as NSDate
+      
+      appDelegate.saveContext()
       status = .newPhoto
     }
     

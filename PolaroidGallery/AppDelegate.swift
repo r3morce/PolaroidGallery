@@ -7,10 +7,39 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+  // MARK: - Core Data
+  
+  lazy var persistentContainer: NSPersistentContainer = {
+    let container = NSPersistentContainer(name: "Photos")
+    
+    container.loadPersistentStores(completionHandler: { storeDescription, error in
+      if let error = error {
+        fatalError("Unresolved error \(error)")
+      }
+    })
+    
+    return container
+  }()
+  
+  func saveContext() {
+    let context = persistentContainer.viewContext
+    
+    if context.hasChanges {
+      do {
+        try context.save()
+      } catch {
+        fatalError("Unresolved error \(error)")
+      }
+    }
+  }
+  
+  // MARK: - Default
+  
   var window: UIWindow?
 
 
