@@ -233,6 +233,10 @@ class ViewController: UIViewController {
         return
       }
       
+      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.polaroidTapped(gesture:)))
+      polaroidView.addGestureRecognizer(tapGesture)
+      polaroidView.isUserInteractionEnabled = true
+      
       containerView.addSubview(polaroidView)
       
       if polaroidViews.isEmpty {
@@ -253,6 +257,12 @@ class ViewController: UIViewController {
       
       polaroidViews.append(polaroidView)
     }
+  }
+  
+  func polaroidTapped(gesture: UIGestureRecognizer) {
+    print("Image Tapped \(gesture.view)")
+    
+    
   }
   
   private func growsSinceText(from photoDate: Date) -> String {
