@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,26 +21,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSQ-Qt-EpB">
-                                <rect key="frame" x="-12" y="0.0" width="375" height="467"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSQ-Qt-EpB">
+                                <rect key="frame" x="0.0" y="20" width="375" height="450"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E07-jD-gRc" userLabel="Container View">
-                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="467"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PXy-iu-Lxg">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="450"/>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="E07-jD-gRc" firstAttribute="height" secondItem="FSQ-Qt-EpB" secondAttribute="height" id="Anv-QH-CS7"/>
-                                    <constraint firstAttribute="trailing" secondItem="E07-jD-gRc" secondAttribute="trailing" id="MRN-JW-krg"/>
-                                    <constraint firstItem="E07-jD-gRc" firstAttribute="leading" secondItem="FSQ-Qt-EpB" secondAttribute="leading" id="daR-CX-jZS"/>
-                                    <constraint firstItem="E07-jD-gRc" firstAttribute="centerY" secondItem="FSQ-Qt-EpB" secondAttribute="centerY" id="tVz-BU-0ML"/>
+                                    <constraint firstItem="PXy-iu-Lxg" firstAttribute="centerY" secondItem="FSQ-Qt-EpB" secondAttribute="centerY" id="0AM-vT-POB"/>
+                                    <constraint firstItem="PXy-iu-Lxg" firstAttribute="top" secondItem="FSQ-Qt-EpB" secondAttribute="top" id="6Ec-vj-xq1"/>
+                                    <constraint firstAttribute="trailing" secondItem="PXy-iu-Lxg" secondAttribute="trailing" id="H6C-7v-ku0"/>
+                                    <constraint firstItem="PXy-iu-Lxg" firstAttribute="centerX" secondItem="FSQ-Qt-EpB" secondAttribute="centerX" id="N8i-Co-rxG"/>
+                                    <constraint firstItem="PXy-iu-Lxg" firstAttribute="leading" secondItem="FSQ-Qt-EpB" secondAttribute="leading" id="QaF-A0-3ys"/>
+                                    <constraint firstAttribute="height" constant="450" id="p9C-9I-FVa"/>
+                                    <constraint firstAttribute="bottom" secondItem="PXy-iu-Lxg" secondAttribute="bottom" id="sht-bp-K67"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ymk-yT-vEB"/>
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7E-Ac-cie" userLabel="Add New Polaroid Button">
-                                <rect key="frame" x="187" y="621" width="172" height="30"/>
+                                <rect key="frame" x="159" y="621" width="200" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Wmw-qt-Ztw"/>
+                                    <constraint firstAttribute="height" constant="30" id="cl1-Sm-Wb6"/>
+                                </constraints>
                                 <state key="normal" title="Add New Polaroid Button"/>
                                 <connections>
                                     <action selector="addNewPolaroid" destination="BYZ-38-t0r" eventType="touchUpInside" id="PtG-r4-nBn"/>
@@ -50,23 +55,22 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="FSQ-Qt-EpB" secondAttribute="trailing" id="Pkz-Eg-tQO"/>
-                            <constraint firstItem="FSQ-Qt-EpB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="TIW-06-fNb"/>
-                            <constraint firstAttribute="trailing" secondItem="M7E-Ac-cie" secondAttribute="trailing" constant="16" id="WJl-JI-cA2"/>
-                            <constraint firstItem="FSQ-Qt-EpB" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.7" id="eW4-P6-fSg"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="M7E-Ac-cie" secondAttribute="bottom" constant="16" id="oMh-b1-Kus"/>
-                            <constraint firstItem="FSQ-Qt-EpB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="otK-A2-O2w"/>
+                            <constraint firstAttribute="trailing" secondItem="FSQ-Qt-EpB" secondAttribute="trailing" id="K2W-0q-IQq"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="M7E-Ac-cie" secondAttribute="bottom" constant="16" id="KQ6-Ah-qTg"/>
+                            <constraint firstAttribute="trailing" secondItem="M7E-Ac-cie" secondAttribute="trailing" constant="16" id="a7B-Ns-Ae0"/>
+                            <constraint firstItem="FSQ-Qt-EpB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="bJx-6G-7oc"/>
+                            <constraint firstItem="FSQ-Qt-EpB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="uI7-v0-YqE"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="addNewPolaroidButton" destination="M7E-Ac-cie" id="Zdd-EW-Gcq"/>
-                        <outlet property="containerView" destination="E07-jD-gRc" id="R4y-qu-ZbI"/>
-                        <outlet property="scrollView" destination="FSQ-Qt-EpB" id="Kdt-HQ-XIh"/>
+                        <outlet property="scrollView" destination="FSQ-Qt-EpB" id="ldp-gN-3l1"/>
+                        <outlet property="stackView" destination="PXy-iu-Lxg" id="GWc-b3-k0I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24.800000000000001" y="35.532233883058474"/>
+            <point key="canvasLocation" x="28" y="75.112443778110944"/>
         </scene>
     </scenes>
 </document>

@@ -20,13 +20,9 @@ class ViewController: UIViewController {
       scrollView.backgroundColor = .brown
     }
   }
-  
-  @IBOutlet weak var containerView: UIView! {
-    didSet {
-      containerView.translatesAutoresizingMaskIntoConstraints = false
-      containerView.backgroundColor = nil
-    }
-  }
+
+  @IBOutlet private weak var stackView: UIStackView!
+//  @IBOutlet private weak var stackViewWidth: NSLayoutConstraint!
   
   @IBOutlet private weak var addNewPolaroidButton: UIButton! {
     didSet {
@@ -42,7 +38,7 @@ class ViewController: UIViewController {
     case returning
   }
 
-  fileprivate var polaroidViews: [PolaroidView] = []
+//  fileprivate var polaroidViews: [PolaroidView] = []
   fileprivate var status: Status = .firstStart
 
   fileprivate var randomDate: Date {
@@ -130,9 +126,12 @@ class ViewController: UIViewController {
     
     switch status {
     case .newPhoto:
-      addPolaroidToGalery(photo: photos.last!)
-    case .firstStart:
-      animatePolaroids()
+      guard let newPolaroidView = createPolaroid(photo: photos.last!) else {
+        return
+      }
+      addPolaroidToGalery(newPolaroidView: newPolaroidView)
+    case .firstStart:()
+      // animatePolaroids()
     case .returning:()
     }
     
@@ -142,60 +141,18 @@ class ViewController: UIViewController {
   // MARK: - Functions
   
   // Todo: Refactor function name
-  fileprivate func addPolaroidToGalery(photo: PhotoEntity) {
+  private func fillWithPolaroids() {
     
-    guard let newPolaroidView = createPolaroid(photo: photo) else {
-      return
+//    polaroidViews = []
+    
+    for photo in photos {
+      
+      guard let polaroidView = createPolaroid(photo: photo) else {
+        return
+      }
+      
+      addPolaroidToGalery(newPolaroidView: polaroidView)
     }
-    
-    newPolaroidView.center.y = scrollView.center.y
-    newPolaroidView.center.x -= scrollView.frame.width*2
-    
-    containerView.addSubview(newPolaroidView)
-    
-    if let previousPolaroidView = polaroidViews.last {
-      newPolaroidView.rightAnchor.constraint(equalTo: previousPolaroidView.leftAnchor, constant: 8).isActive = true
-    }    
-    
-    if let leftMostConstraint = leftMostConstraint {
-      containerView.removeConstraint(leftMostConstraint)
-    }
-    leftMostConstraint = newPolaroidView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 32)
-    leftMostConstraint?.isActive = true
-    
-    newPolaroidView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8).isActive = true
-    newPolaroidView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8).isActive = true
-    newPolaroidView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8).isActive = true
-    
-    polaroidViews.append(newPolaroidView)
-    
-    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-      self.scrollView.layoutIfNeeded()
-    }, completion: nil)
-  }
-  
-  private func animatePolaroids() {
-    
-    guard polaroidViews.count>1 else {
-      return
-    }
-    
-    let firstPolaroid = polaroidViews.last!
-    let secondPolaroid = polaroidViews[polaroidViews.count-2]
-    
-    let firstPolaroidCenter = firstPolaroid.center
-    let secondPolaroidCenter = secondPolaroid.center
-    
-    firstPolaroid.center.x += firstPolaroid.frame.width
-    secondPolaroid.center.x += secondPolaroid.frame.width
-    
-    UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear, animations: {
-      firstPolaroid.center = firstPolaroidCenter
-    }, completion: nil)
-    
-    UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveLinear, animations: {
-      secondPolaroid.center = secondPolaroidCenter
-    }, completion: nil)
   }
   
   private func createPolaroid(photo: PhotoEntity) -> PolaroidView? {
@@ -225,42 +182,19 @@ class ViewController: UIViewController {
     return polaroidView
   }
   
-  private func fillWithPolaroids() {
+  fileprivate func addPolaroidToGalery(newPolaroidView: PolaroidView) {
+
+    stackView.addArrangedSubview(newPolaroidView)
     
-    UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
-      for subview in self.containerView.subviews {
-        subview.removeFromSuperview()
-      }
-    }, completion: nil)
+    newPolaroidView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8).isActive = true
+    newPolaroidView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1).isActive = true
     
-    polaroidViews = []
+//    stackViewWidth.constant = view.frame.width*CGFloat(photos.count)
+    // polaroidViews.append(newPolaroidView)    
     
-    for photo in photos {
-      
-      guard let polaroidView = createPolaroid(photo: photo) else {
-        return
-      }
-      
-      containerView.addSubview(polaroidView)
-      
-      if polaroidViews.isEmpty {
-        polaroidView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -64).isActive = true
-      } else {
-        polaroidView.rightAnchor.constraint(equalTo: polaroidViews.last!.leftAnchor, constant: 8).isActive = true
-      }
-      
-      if let leftMostConstraint = leftMostConstraint {
-        containerView.removeConstraint(leftMostConstraint)
-      }
-      leftMostConstraint = polaroidView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 32)
-      leftMostConstraint?.isActive = true
-      
-      polaroidView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8).isActive = true
-      polaroidView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8).isActive = true
-      polaroidView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8).isActive = true
-      
-      polaroidViews.append(polaroidView)
-    }
+//    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+//      self.scrollView.layoutIfNeeded()
+//    }, completion: nil)
   }
   
   func polaroidTapped(gesture: UIGestureRecognizer) {
@@ -320,6 +254,30 @@ class ViewController: UIViewController {
       
       return "Grows since \(difference) days"
     }
+  }
+  
+  private func animatePolaroids() {
+    
+//    guard polaroidViews.count>1 else {
+//      return
+//    }
+//    
+//    let firstPolaroid = polaroidViews.last!
+//    let secondPolaroid = polaroidViews[polaroidViews.count-2]
+//    
+//    let firstPolaroidCenter = firstPolaroid.center
+//    let secondPolaroidCenter = secondPolaroid.center
+//    
+//    firstPolaroid.center.x += firstPolaroid.frame.width
+//    secondPolaroid.center.x += secondPolaroid.frame.width
+//    
+//    UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear, animations: {
+//      firstPolaroid.center = firstPolaroidCenter
+//    }, completion: nil)
+//    
+//    UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveLinear, animations: {
+//      secondPolaroid.center = secondPolaroidCenter
+//    }, completion: nil)
   }
 }
 
